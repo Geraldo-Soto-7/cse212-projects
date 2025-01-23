@@ -1,3 +1,7 @@
+// Gerardo Soto - W01 Code: Dynamic Arrays - CSE212
+
+using System;
+using System.Collections.Generic;
 public static class Arrays
 {
     /// <summary>
@@ -13,8 +17,17 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        double[] multiples = new double[length]; //Initialize an array to hold the multiples
+
+        for (int i = 0; i < length; i++) //Use a loop to calculate each multiple
+        {
+            multiples[i] = number * (i + 1);
+        }
+
+        return multiples; //Return the array of multiples
+
     }
+
 
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
@@ -29,5 +42,20 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        int rotateAmount = amount % data.Count; //Handle cases where the amount is larger than the list size using modulo
+
+        // Split the list into two parts
+        List<int> rightPart = data.GetRange(data.Count - rotateAmount, rotateAmount); // Get the last 'rotateAmount' elements
+        List<int> leftPart = data.GetRange(0, data.Count - rotateAmount); // Get the remaining elements from the beginning
+
+        rightPart.AddRange(leftPart); //Concatenate the two parts
+
+        // Clear the original list and re-insert the rotated elements
+        data.Clear();
+        data.AddRange(rightPart);
+
     }
+
 }
+
