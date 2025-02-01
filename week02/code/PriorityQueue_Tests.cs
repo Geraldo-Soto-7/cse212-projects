@@ -6,24 +6,42 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class PriorityQueueTests
 {
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
-    public void TestPriorityQueue_1()
+    // Scenario: Enqueue and Dequeue elements with different priorities
+    // Expected Result: Element with highest priority is dequeued first
+    public void TestPriorityQueue_EnqueueDequeue()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+        priorityQueue.Enqueue("A", 1);
+        priorityQueue.Enqueue("B", 3);
+        priorityQueue.Enqueue("C", 2);
+
+        Assert.AreEqual("B", priorityQueue.Dequeue()); // Highest priority
+        Assert.AreEqual("C", priorityQueue.Dequeue()); // Next Highest
+        Assert.AreEqual("A", priorityQueue.Dequeue()); // The last
     }
 
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
-    public void TestPriorityQueue_2()
+    // Scenario: Enqueue elements with same priority, check FIFO behavior
+    // Expected Result: First inserted element with same priority dequeued first
+    public void TestPriorityQueue_FIFOSamePriority()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+        priorityQueue.Enqueue("X", 5);
+        priorityQueue.Enqueue("Y", 5);
+        priorityQueue.Enqueue("Z", 5);
+
+        Assert.AreEqual("X", priorityQueue.Dequeue()); // FIFO for same priority
+        Assert.AreEqual("Y", priorityQueue.Dequeue()); // Y is the next with 5
+        Assert.AreEqual("Z", priorityQueue.Dequeue()); // Z has the lowest priority
     }
 
-    // Add more test cases as needed below.
+    [TestMethod]
+    // Scenario: Dequeue from empty queue
+    // Expected Result: Exception thrown
+    public void TestPriorityQueue_EmptyDequeue()
+    {
+        var priorityQueue = new PriorityQueue();
+
+        Assert.ThrowsException<InvalidOperationException>(() => priorityQueue.Dequeue());
+    }
 }
