@@ -19,11 +19,27 @@ public static class SetsAndMaps
     /// that there were no duplicates) and therefore should not be returned.
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
+
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        HashSet<string> wordSet = new HashSet<string>(words);
+        List<string> result = new List<string>();
+        
+        foreach (string word in words)
+        {
+            string reversed = new string(new char[] { word[1], word[0] });
+            
+            if (wordSet.Contains(reversed) && word != reversed)
+            {
+                result.Add($"{word} & {reversed}");
+                wordSet.Remove(word); // To prevent duplicate pairs
+                wordSet.Remove(reversed);
+            }
+        }
+        
+        return result.ToArray();
     }
+    
 
     /// <summary>
     /// Read a census file and summarize the degrees (education)
@@ -43,6 +59,17 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            if (fields.Length > 3) // Ensure there are enough columns
+            {
+                string degree = fields[3].Trim(); // Column index 4 (0-based index 3)
+                if (!string.IsNullOrEmpty(degree))
+                {
+                    if (degrees.ContainsKey(degree))
+                        degrees[degree]++;
+                    else
+                        degrees[degree] = 1;
+                }
+            }
         }
 
         return degrees;
@@ -67,8 +94,12 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = new string(word1.ToLower().Where(char.IsLetter).OrderBy(c => c).ToArray());
+        word2 = new string(word2.ToLower().Where(char.IsLetter).OrderBy(c => c).ToArray());
+        return word1 == word2;
     }
+
+     
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
